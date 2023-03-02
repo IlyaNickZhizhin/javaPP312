@@ -39,6 +39,7 @@
         </td>
     </tr>
     <tr>
+
         <form th:action="@{/addNewUser}" th:method="post">
             <td><input type="text" th:placeholder="name" name="name" /></td>
             <td><input type="text" th:placeholder="surname" name="surname" /></td>
@@ -52,17 +53,6 @@
     </tr>
     </tbody>
 </table>
-
-<form th:action="@{/start}" method="get">
-
-    <!-- Описание большой (на четверть экрана), круглой, выпуклой на 3 пикселя, расположенной
-     по центру экрана, на сером фоне, 50м шрифтом,
-      жирным, черного цвета внутри которой приветствие умещено в три строки-->
-    <button type="submit" style="width: 300px; height: 300px; border-radius: 300px; border: 1px
-    outset gray; font-size: 20px; font-weight: bold; color: black; background-color: burlywood;">
-        !!!!Обновить!!!!
-    </button>
-</form>
 </body>
 </html>
 

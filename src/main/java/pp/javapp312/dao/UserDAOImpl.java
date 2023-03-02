@@ -1,8 +1,6 @@
 package pp.javapp312.dao;
 
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,43 +12,33 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO{
 
 
-    private final EntityManagerFactory factory;
+    private final EntityManager entityManager;
 
     @Autowired
-    public UserDAOImpl(EntityManagerFactory factory) {
-        this.factory = factory;
+    public UserDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
     public List<User> getAllUsers() {
-
-        return factory.createEntityManager().createQuery("from User", User.class).getResultList();
-
+        return entityManager.createQuery("from User", User.class).getResultList();
     }
 
     @Override
     public void saveUser(User user) {
-        EntityManager manager = factory.createEntityManager();
-        EntityTransaction transaction = manager.getTransaction();
-        transaction.begin();
-        manager.merge(user);
-        transaction.commit();
+        entityManager.merge(user);
     }
 
     @Override
-    public User getUser(int id) {
-        return factory.createEntityManager().find(User.class, id);
+    public User getUserById(int id) {
+        return entityManager.find(User.class, id);
     }
 
     @Override
     public void deleteUser(int id) {
-        EntityManager manager = factory.createEntityManager();
-        EntityTransaction transaction = manager.getTransaction();
-        transaction.begin();
-        Query query = manager.createQuery("delete from User where id = :userId");
+        Query query = entityManager.createQuery("delete from User where id = :userId");
         query.setParameter("userId", id);
         query.executeUpdate();
-        transaction.commit();
     }
 
 }

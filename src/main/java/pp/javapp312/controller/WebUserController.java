@@ -19,45 +19,33 @@ public class WebUserController {
         this.userService = userService;
     }
 
-    //метод вызывающий шаблон index из resources/templates
-
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index() {
         return "index";
     }
 
-    @RequestMapping("/start")
+    @GetMapping("/start")
     public String showAllUsers(Model model) {
         List<User> userList = userService.getAllUsers();
         model.addAttribute("users", userList);
         return "/all-users";
     }
 
-    @RequestMapping(value = "/addNewUser")
-    public String addNewUser(@RequestParam(name = "name") String name,
-                             @RequestParam(name = "surname") String surname,
-                             @RequestParam(name = "email") String email) {
-        User user = new User(name, surname, email);
+    @PostMapping(value = "/addNewUser")
+    public String addNewUser(@ModelAttribute("newUser") User user) {
         userService.saveUser(user);
         return "redirect:/start";
     }
 
-    @RequestMapping("/updateUser")
+    @PatchMapping("/updateUser")
     public String updateUser(@RequestParam("id") int id,
                              Model model) {
-        User user = userService.getUser(id);
+        User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "/user-info";
     }
-    @RequestMapping("/saveUser")
-    public String updateUser(@RequestParam("id") int id,
-                             @RequestParam(name = "name") String name,
-                             @RequestParam(name = "surname") String surname,
-                             @RequestParam(name = "email") String email) {
-        User user = userService.getUser(id);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setEmail(email);
+    @PutMapping("/saveUser")
+    public String updateUser(@ModelAttribute("changedUser") User user) {
         userService.saveUser(user);
         return "redirect:/start";
     }

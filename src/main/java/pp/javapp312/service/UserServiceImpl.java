@@ -9,6 +9,7 @@ import pp.javapp312.model.User;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService{
 
     private final UserDAO userDAO;
@@ -19,23 +20,23 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
     @Override
+    @Transactional
     public void saveUser(User user) {
         userDAO.saveUser(user);
     }
 
     @Override
-    @Transactional
-    public User getUser(int id) {
-        return userDAO.getUser(id);
+    public User getUserById(int id) {
+        return userDAO.getUserById(id);
     }
 
     @Override
+    @Transactional
     public void deleteUser(int id) {
         userDAO.deleteUser(id);
     }
