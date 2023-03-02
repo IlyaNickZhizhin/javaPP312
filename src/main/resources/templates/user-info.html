@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Информация о пользователе</h2>
-    <form th:action="@{/saveUser}" th:method="put">
+    <form th:action="@{/saveUser}" th:method="patch">
         <input type="hidden" th:name="id" th:value="${user.id}"/>
         <div class="container">
             <label>1. Имя </label>
